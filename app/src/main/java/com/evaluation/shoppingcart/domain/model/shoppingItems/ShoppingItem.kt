@@ -5,4 +5,5 @@ data class ShoppingItem(
     val itemName: String? = null,
     val sellingPrice: Double? = null,
     val taxPercentage: Double? = null,
+    val quantity: Int? = null,
 )
