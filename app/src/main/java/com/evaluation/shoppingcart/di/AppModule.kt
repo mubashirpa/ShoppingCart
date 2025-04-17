@@ -7,6 +7,7 @@ import com.evaluation.shoppingcart.data.repository.ShoppingItemsRepositoryImpl
 import com.evaluation.shoppingcart.domain.repository.ShoppingCartRepository
 import com.evaluation.shoppingcart.domain.repository.ShoppingItemsRepository
 import com.evaluation.shoppingcart.domain.usecase.AddToShoppingCartUseCase
+import com.evaluation.shoppingcart.domain.usecase.GetShoppingCartItemCountUseCase
 import com.evaluation.shoppingcart.domain.usecase.GetShoppingCartItemsUseCase
 import com.evaluation.shoppingcart.domain.usecase.GetShoppingItemsUseCase
 import com.evaluation.shoppingcart.presentation.cart.CartViewModel
@@ -42,6 +43,7 @@ val appModule =
         single { GetShoppingItemsUseCase(get()) }
         single { AddToShoppingCartUseCase(get()) }
         single { GetShoppingCartItemsUseCase(get()) }
+        single { GetShoppingCartItemCountUseCase(get()) }
         viewModelOf(::HomeViewModel)
         viewModelOf(::CartViewModel)
         single {
