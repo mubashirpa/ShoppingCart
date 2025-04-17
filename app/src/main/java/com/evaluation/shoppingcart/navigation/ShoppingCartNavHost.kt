@@ -1,12 +1,13 @@
 package com.evaluation.shoppingcart.navigation
 
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.evaluation.shoppingcart.home.HomeScreen
+import com.evaluation.shoppingcart.presentation.home.HomeScreen
+import com.evaluation.shoppingcart.presentation.home.HomeViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ShoppingCartNavHost(
@@ -20,7 +21,11 @@ fun ShoppingCartNavHost(
         modifier = modifier,
     ) {
         composable<Screen.Home> {
-            HomeScreen(modifier = Modifier.fillMaxSize())
+            val viewModel: HomeViewModel = koinViewModel()
+            HomeScreen(
+                uiState = viewModel.uiState,
+                onEvent = viewModel::onEvent,
+            )
         }
     }
 }
