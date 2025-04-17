@@ -12,4 +12,5 @@
     <string name="error_ktor_gateway_timeout">Too much load at this time, try again later!</string>
     <string name="error_ktor_server_error">Server Disruption! We are on fixing it.</string>
     <string name="error_ktor_unauthorized">Authorization Failed! Try Logging In again.</string>
+    <string name="cart">Cart</string>
 </resources>
