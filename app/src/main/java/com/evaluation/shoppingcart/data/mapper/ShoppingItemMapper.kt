@@ -20,3 +20,12 @@ fun ShoppingItem.toShoppingCartItem(quantity: Int = 1): ShoppingCartEntity =
         taxPercentage = taxPercentage,
         quantity = quantity,
     )
+
+fun ShoppingCartEntity.toShoppingItem(): ShoppingItem =
+    ShoppingItem(
+        itemID = itemID,
+        itemName = itemName,
+        sellingPrice = sellingPrice,
+        taxPercentage = taxPercentage,
+        quantity = quantity,
+    )
