@@ -8,14 +8,17 @@ import androidx.lifecycle.viewModelScope
 import com.evaluation.shoppingcart.core.Result
 import com.evaluation.shoppingcart.domain.model.shoppingItems.ShoppingItem
 import com.evaluation.shoppingcart.domain.usecase.AddToShoppingCartUseCase
+import com.evaluation.shoppingcart.domain.usecase.GetShoppingCartItemCountUseCase
 import com.evaluation.shoppingcart.domain.usecase.GetShoppingItemsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getShoppingItemsUseCase: GetShoppingItemsUseCase,
     private val addToShoppingCartUseCase: AddToShoppingCartUseCase,
+    private val getShoppingCartItemCountUseCase: GetShoppingCartItemCountUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(HomeUiState())
         private set
@@ -24,6 +27,7 @@ class HomeViewModel(
 
     init {
         getShoppingItems(false)
+        getShoppingCartItemCount()
     }
 
     fun onEvent(event: HomeUiEvent) {
@@ -52,7 +56,6 @@ class HomeViewModel(
         getShoppingItemsJob =
             getShoppingItemsUseCase()
                 .onEach { result ->
-                    uiState = uiState.copy(shoppingItemsResult = result)
                     when (result) {
                         is Result.Empty -> {}
 
@@ -115,5 +118,13 @@ class HomeViewModel(
                     }
                 }
             }.launchIn(viewModelScope)
+    }
+
+    private fun getShoppingCartItemCount() {
+        viewModelScope.launch {
+            getShoppingCartItemCountUseCase().collect {
+                uiState = uiState.copy(shoppingCartItemCount = it)
+            }
+        }
     }
 }

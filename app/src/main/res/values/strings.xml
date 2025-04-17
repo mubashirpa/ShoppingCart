@@ -2,13 +2,16 @@
     <string name="app_name">Shopping Cart</string>
     <string name="retry">Retry</string>
     <string name="cart">Cart</string>
+    <string name="cart_">Cart %1$s</string>
     <string name="your_cart_is_empty">Your cart is empty!</string>
     <string name="shop_now">Shop now</string>
     <string name="place_order">Place order</string>
     <string name="mrp">MRP: ₹%1$s</string>
     <string name="items">Items: ₹%1$s</string>
     <string name="tax">Tax: ₹%1$s</string>
+    <string name="tax_percentage">Tax: %1$s</string>
     <string name="order_total">Order Total: ₹%1$s</string>
+    <string name="add_to_cart">Add to cart</string>
 
     <!-- Errors -->
     <string name="error_connect">A network error (such as timeout, interrupted connection or unreachable host) has occurred.</string>

@@ -15,6 +15,8 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -72,7 +74,16 @@ fun HomeScreen(
                     )
                 },
                 text = {
-                    Text(text = stringResource(R.string.cart))
+                    val text =
+                        if (uiState.shoppingCartItemCount > 0) {
+                            stringResource(
+                                id = R.string.cart_,
+                                uiState.shoppingCartItemCount.toString(),
+                            )
+                        } else {
+                            stringResource(id = R.string.cart)
+                        }
+                    Text(text = text)
                 },
             )
         },
@@ -98,23 +109,29 @@ fun HomeScreen(
             }
 
             is Result.Success -> {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
-                    contentPadding = innerPadding,
+                PullToRefreshBox(
+                    isRefreshing = uiState.isRefreshing,
+                    onRefresh = {
+                        onEvent(HomeUiEvent.Refresh)
+                    },
+                    modifier = Modifier.padding(innerPadding),
+                    state = rememberPullToRefreshState(),
                 ) {
-                    val shoppingItems = shoppingItemsResult.data.orEmpty()
-                    items(
-                        items = shoppingItems,
-                        key = { it.itemID!! },
-                    ) { item ->
-                        ShoppingListItem(
-                            item = item,
-                            addedToCart = item.quantity != null && item.quantity > 0,
-                            onAddToCartClick = { addedToCart ->
-                                onEvent(HomeUiEvent.AddToCart(item, addedToCart))
-                            },
-                            modifier = Modifier.animateItem(),
-                        )
+                    LazyColumn(modifier = Modifier.fillMaxSize()) {
+                        val shoppingItems = shoppingItemsResult.data.orEmpty()
+                        items(
+                            items = shoppingItems,
+                            key = { it.itemID!! },
+                        ) { item ->
+                            ShoppingListItem(
+                                onClick = {},
+                                item = item,
+                                onAddToCartClick = {
+                                    onEvent(HomeUiEvent.AddToCart(item))
+                                },
+                                modifier = Modifier.animateItem(),
+                            )
+                        }
                     }
                 }
             }

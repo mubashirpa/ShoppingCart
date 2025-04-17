@@ -7,6 +7,7 @@ import com.evaluation.shoppingcart.domain.model.shoppingItems.ShoppingItem
 data class HomeUiState(
     val isRefreshing: Boolean = false,
     val openProgressDialog: Boolean = false,
+    val shoppingCartItemCount: Int = 0,
     val shoppingItemsResult: Result<List<ShoppingItem>> = Result.Empty(),
     val userMessage: UiText? = null,
 )
