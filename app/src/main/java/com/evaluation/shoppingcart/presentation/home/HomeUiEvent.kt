@@ -11,4 +11,6 @@ sealed class HomeUiEvent {
     data object Refresh : HomeUiEvent()
 
     data object Retry : HomeUiEvent()
+
+    data object UserMessageShown : HomeUiEvent()
 }

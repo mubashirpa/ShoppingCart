@@ -39,6 +39,10 @@ class HomeViewModel(
             HomeUiEvent.Retry -> {
                 getShoppingItems(false)
             }
+
+            HomeUiEvent.UserMessageShown -> {
+                uiState = uiState.copy(userMessage = null)
+            }
         }
     }
 
