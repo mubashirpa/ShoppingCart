@@ -20,6 +20,7 @@ import com.evaluation.shoppingcart.R
 import com.evaluation.shoppingcart.core.Result
 import com.evaluation.shoppingcart.presentation.components.ErrorScreen
 import com.evaluation.shoppingcart.presentation.components.LoadingScreen
+import com.evaluation.shoppingcart.presentation.components.ProgressDialog
 import com.evaluation.shoppingcart.presentation.home.components.ShoppingListItem
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -78,6 +79,10 @@ fun HomeScreen(
                     ) { item ->
                         ShoppingListItem(
                             item = item,
+                            addedToCart = item.quantity != null && item.quantity > 0,
+                            onAddToCartClick = { addedToCart ->
+                                onEvent(HomeUiEvent.AddToCart(item, addedToCart))
+                            },
                             modifier = Modifier.animateItem(),
                         )
                     }
@@ -85,4 +90,9 @@ fun HomeScreen(
             }
         }
     }
+
+    ProgressDialog(
+        open = uiState.openProgressDialog,
+        onDismissRequest = {},
+    )
 }

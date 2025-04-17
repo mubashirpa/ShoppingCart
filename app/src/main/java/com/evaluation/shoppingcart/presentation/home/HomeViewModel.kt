@@ -6,6 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.evaluation.shoppingcart.core.Result
+import com.evaluation.shoppingcart.domain.model.shoppingItems.ShoppingItem
+import com.evaluation.shoppingcart.domain.usecase.AddToShoppingCartUseCase
 import com.evaluation.shoppingcart.domain.usecase.GetShoppingItemsUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.launchIn
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.onEach
 
 class HomeViewModel(
     private val getShoppingItemsUseCase: GetShoppingItemsUseCase,
+    private val addToShoppingCartUseCase: AddToShoppingCartUseCase,
 ) : ViewModel() {
     var uiState by mutableStateOf(HomeUiState())
         private set
@@ -25,6 +28,10 @@ class HomeViewModel(
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
+            is HomeUiEvent.AddToCart -> {
+                addToShoppingCart(event.item)
+            }
+
             HomeUiEvent.Refresh -> {
                 getShoppingItems(true)
             }
@@ -79,5 +86,30 @@ class HomeViewModel(
                         }
                     }
                 }.launchIn(viewModelScope)
+    }
+
+    private fun addToShoppingCart(shoppingItem: ShoppingItem) {
+        addToShoppingCartUseCase(shoppingItem)
+            .onEach { result ->
+                when (result) {
+                    is Result.Empty -> {}
+
+                    is Result.Error -> {
+                        uiState =
+                            uiState.copy(
+                                openProgressDialog = false,
+                                userMessage = result.message,
+                            )
+                    }
+
+                    is Result.Loading -> {
+                        uiState = uiState.copy(openProgressDialog = true)
+                    }
+
+                    is Result.Success -> {
+                        uiState = uiState.copy(openProgressDialog = false)
+                    }
+                }
+            }.launchIn(viewModelScope)
     }
 }
