@@ -1,47 +1,37 @@
 package com.evaluation.shoppingcart.presentation.cart.components
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconToggleButton
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.evaluation.shoppingcart.R
 import com.evaluation.shoppingcart.domain.model.shoppingItems.ShoppingItem
 import com.evaluation.shoppingcart.presentation.theme.ShoppingCartTheme
 
 @Composable
 fun CartListItem(
+    onClick: () -> Unit,
     item: ShoppingItem,
-    addedToCart: Boolean,
-    onAddToCartClick: (addedToCart: Boolean) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     ListItem(
         headlineContent = {
             Text(text = item.itemName.orEmpty())
         },
-        trailingContent = {
-            IconToggleButton(checked = addedToCart, onCheckedChange = onAddToCartClick) {
-                if (addedToCart) {
-                    Icon(
-                        Icons.Filled.Favorite,
-                        contentDescription = null,
-                    )
-                } else {
-                    Icon(
-                        Icons.Filled.FavoriteBorder,
-                        contentDescription = null,
-                    )
-                }
-            }
+        supportingContent = {
+            Text(text = stringResource(R.string.mrp, item.sellingPrice.toString()))
         },
-        modifier = modifier,
+        trailingContent = {
+            val quantity = item.quantity ?: 0
+            Text(text = pluralStringResource(R.plurals.item_count, quantity, quantity))
+        },
+        modifier = modifier.clickable(onClick = onClick),
         colors = ListItemDefaults.colors(containerColor = Color.Transparent),
     )
 }
@@ -51,12 +41,13 @@ fun CartListItem(
 private fun ShoppingListItemPreview() {
     ShoppingCartTheme {
         CartListItem(
+            onClick = {},
             item =
                 ShoppingItem(
                     itemName = "Item Name",
+                    sellingPrice = 50.0,
+                    quantity = 5,
                 ),
-            addedToCart = true,
-            onAddToCartClick = {},
         )
     }
 }

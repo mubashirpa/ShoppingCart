@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Shopping Cart</string>
     <string name="retry">Retry</string>
+    <string name="cart">Cart</string>
+    <string name="your_cart_is_empty">Your cart is empty!</string>
+    <string name="shop_now">Shop now</string>
+    <string name="place_order">Place order</string>
+    <string name="mrp">MRP: ₹%1$s</string>
+    <string name="items">Items: ₹%1$s</string>
+    <string name="tax">Tax: ₹%1$s</string>
+    <string name="order_total">Order Total: ₹%1$s</string>
 
     <!-- Errors -->
     <string name="error_connect">A network error (such as timeout, interrupted connection or unreachable host) has occurred.</string>
@@ -12,5 +20,4 @@
     <string name="error_ktor_gateway_timeout">Too much load at this time, try again later!</string>
     <string name="error_ktor_server_error">Server Disruption! We are on fixing it.</string>
     <string name="error_ktor_unauthorized">Authorization Failed! Try Logging In again.</string>
-    <string name="cart">Cart</string>
 </resources>
