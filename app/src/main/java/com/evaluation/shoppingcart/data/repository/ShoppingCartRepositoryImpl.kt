@@ -24,4 +24,6 @@ class ShoppingCartRepositoryImpl(
     }
 
     override suspend fun isItemInCart(itemID: String): Boolean = cartItemDao.isItemInCart(itemID)
+
+    override fun getTotalItemCount(): Flow<Int?> = cartItemDao.getTotalItemCount()
 }

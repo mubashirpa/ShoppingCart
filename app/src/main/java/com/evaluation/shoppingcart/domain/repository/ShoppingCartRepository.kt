@@ -14,4 +14,6 @@ interface ShoppingCartRepository {
     )
 
     suspend fun isItemInCart(itemID: String): Boolean
+
+    fun getTotalItemCount(): Flow<Int?>
 }

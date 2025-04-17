@@ -22,4 +22,7 @@ interface ShoppingCartDao {
 
     @Query("SELECT EXISTS(SELECT * FROM shopping_cart WHERE itemID = :itemID)")
     suspend fun isItemInCart(itemID: String): Boolean
+
+    @Query("SELECT SUM(quantity) FROM shopping_cart")
+    fun getTotalItemCount(): Flow<Int?>
 }
