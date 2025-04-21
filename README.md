@@ -1,11 +1,17 @@
 # Shopping Cart
 
-## Overview
-
 Shopping Cart is a simple Android application built as part of a machine test. The app allows users
 to browse a list of items fetched from a provided API, add items to a cart, and view the cart with
 details such as subtotal, tax, and total. Cart items are persisted locally using a Room database,
 ensuring they remain available even after the app is closed and reopened.
+
+## Screenshots
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="screenshots/screenshot-dark.png">
+  <source media="(prefers-color-scheme: light)" srcset="screenshots/screenshot.png">
+  <img alt="App Screenshot" src="screenshots/screenshot.png">
+</picture>
 
 ## Features
 
